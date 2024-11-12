@@ -6,15 +6,17 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 import asyncio
 
-api = ''
+api = '8125982558:AAGmyXr1-seEDL5AzYm-Au8tuy39-oRmTIw'
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
-kb = ReplyKeyboardMarkup(resize_keyboard=True)
-button_ras = KeyboardButton(text="Рассчитать")
-button_info = KeyboardButton(text="Информация")
-kb.row(button_ras)
-kb.row(button_info)
+start_menu = ReplyKeyboardMarkup(
+    keyboard=[
+    [KeyboardButton(text="Рассчитать")],
+    [KeyboardButton(text="Информация")]
+    ],
+    resize_keyboard=True
+        )
 
 kb_inline = InlineKeyboardMarkup()
 button_formula = InlineKeyboardButton(text='Формулы расчёта',  callback_data='formulas')
@@ -36,7 +38,7 @@ async def get_formulas(call):
 
 @dp.message_handler(commands=["start"])
 async def start(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup = kb)
+    await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup = start_menu)
     await message.answer('Введите "Рассчитать" что бы начать рассчет вашей нормы каллорий')
 
 @dp.message_handler(text = 'Информация')
